@@ -1,6 +1,5 @@
-package DCEF_XE5;
+package DCEF;
 
-{$R *.res}
 {$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
 {$ALIGN 8}
 {$ASSERTIONS ON}
@@ -25,7 +24,8 @@ package DCEF_XE5;
 {$IMAGEBASE $400000}
 {$DEFINE DEBUG}
 {$ENDIF IMPLICITBUILDING}
-{$DESCRIPTION 'Chromium Embedded Framework 3'}
+{$DESCRIPTION 'Delphi Chromium Embedded 3 Framework'}
+{$LIBSUFFIX 'XE'}
 {$IMPLICITBUILD ON}
 
 requires
@@ -33,9 +33,9 @@ requires
   vcl;
 
 contains
-  cefreg in 'cefreg.pas',
-  cefgui in '..\src\cefgui.pas',
-  ceflib in '..\src\ceflib.pas',
-  cefvcl in '..\src\cefvcl.pas';
+  cefvcl in '..\..\src\cefvcl.pas',
+  ceflib in '..\..\src\ceflib.pas',
+  cefgui in '..\..\src\cefgui.pas',
+  cefreg in '..\cefreg.pas';
 
 end.
