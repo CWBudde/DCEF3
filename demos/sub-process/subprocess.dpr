@@ -7,8 +7,8 @@ program subprocess;
 
 uses
   Windows,
-  ceflib,
-  SysUtils;
+  SysUtils,
+  ceflib in '..\..\src\ceflib.pas';
 
 {
   Simple CEF3 host application to be used in multi-process mode (e.g. with
