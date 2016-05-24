@@ -24,11 +24,12 @@ unit ceffmx;
 
 interface
 uses
-  SysUtils, System.UITypes, Classes,
+  SysUtils, System.Types, System.UITypes, Classes,
 {$ifdef MSWINDOWS}
   Messages, Windows,
 {$endif}
-  FMX.Types, FMX.Platform, FMX.Controls, System.Types, ceflib, cefgui;
+  FMX.Types, FMX.Platform, {$IFDEF DELPHI19_UP}FMX.Graphics, {$ENDIF}
+  FMX.Controls, ceflib, cefgui;
 
 type
   TCustomChromiumFMX = class(TControl, IChromiumEvents)
@@ -891,6 +892,9 @@ procedure TCustomChromiumFMX.doOnPaint(const browser: ICefBrowser;
 var
   src, dst: PByte;
   offset, i, {j,} w, c: Integer;
+{$IFDEF DELPHI17_UP}
+  bitmapData : TBitmapData;
+{$ENDIF}
 begin
   if csDestroying in ComponentState then Exit;
 
@@ -900,25 +904,33 @@ begin
 //      InvalidateRect(ClipRect);
 //    end;
     with FBuffer do
-    for c := 0 to dirtyRectsCount - 1 do
-    begin
-      w := Width * 4;
-      offset := ((dirtyRects[c].y * Width) + dirtyRects[c].x) * 4;
-      src := @PByte(buffer)[offset];
-      dst := @PByte(StartLine)[offset];
-      offset := dirtyRects[c].width * 4;
-      for i := 0 to dirtyRects[c].height - 1 do
+      for c := 0 to dirtyRectsCount - 1 do
       begin
+        w := Width * 4;
+        offset := ((dirtyRects[c].y * Width) + dirtyRects[c].x) * 4;
+        src := @PByte(buffer)[offset];
+{$IFDEF DELPHI17_UP}
+        Map(TMapAccess.Write, bitmapData);
+        dst := bitmapData.GetPixelAddr(dirtyRects[c].y, dirtyRects[c].x);
+{$ELSE}
+        dst := @PByte(StartLine)[offset];
+{$ENDIF}
+        offset := dirtyRects[c].width * 4;
+        for i := 0 to dirtyRects[c].height - 1 do
+        begin
 //        for j := 0 to offset div 4 do
 //          PAlphaColorArray(dst)[j] := PAlphaColorArray(src)[j] or $FF000000;
-        System.Move(src^, dst^, offset);
-        Inc(dst, w);
-        Inc(src, w);
-      end;
+          System.Move(src^, dst^, offset);
+          Inc(dst, w);
+          Inc(src, w);
+        end;
       //InvalidateRect(ClipRect);
-      InvalidateRect(RectF(dirtyRects[c].x, dirtyRects[c].y,
-        dirtyRects[c].x + dirtyRects[c].width,  dirtyRects[c].y + dirtyRects[c].height));
-    end;
+{$IFDEF DELPHI17_UP}
+        Unmap(bitmapData);
+{$ENDIF}
+        InvalidateRect(RectF(dirtyRects[c].x, dirtyRects[c].y,
+          dirtyRects[c].x + dirtyRects[c].width,  dirtyRects[c].y + dirtyRects[c].height));
+      end;
 end;
 
 procedure TCustomChromiumFMX.doOnPluginCrashed(const browser: ICefBrowser;
@@ -1196,9 +1208,14 @@ procedure TCustomChromiumFMX.MouseWheel(Shift: TShiftState; WheelDelta: Integer;
   var Handled: Boolean);
 var
   event: TCefMouseEvent;
+  MouseService: IFMXMouseService;
 begin
   if Browser <> nil then
+  {$IFDEF DELPHI21_UP}
+  with AbsoluteToLocal(MouseService.GetMousePos).Round do
+  {$ELSE}
   with AbsoluteToLocal(Platform.GetMousePos).Round do
+  {$ENDIF}
   begin
     event.x := X;
     event.y := Y;
