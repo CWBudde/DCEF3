@@ -1,11 +1,13 @@
 program guiclient;
 
 uses
-  sysutils,
-  ceflib,
   Windows,
   Forms,
+  SysUtils,
   main in 'main.pas' {MainForm},
+  ceflib in '..\..\src\ceflib.pas',
+  cefgui in '..\..\src\cefgui.pas',
+  cefvcl in '..\..\src\cefvcl.pas',
   ceffilescheme in '..\filescheme\ceffilescheme.pas';
 
 {$R *.res}

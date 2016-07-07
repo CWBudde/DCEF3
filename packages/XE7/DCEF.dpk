@@ -1,11 +1,10 @@
-package DCEF_DX10;
+package DCEF;
 
-{$R *.res}
 {$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
-{$DEBUGINFO OFF}
+{$DEBUGINFO ON}
 {$EXTENDEDSYNTAX ON}
 {$IMPORTEDDATA ON}
 {$IOCHECKS ON}
@@ -25,6 +24,8 @@ package DCEF_DX10;
 {$IMAGEBASE $400000}
 {$DEFINE DEBUG}
 {$ENDIF IMPLICITBUILDING}
+{$DESCRIPTION 'Delphi Chromium Embedded 3 Framework'}
+{$LIBSUFFIX 'XE7'}                      
 {$IMPLICITBUILD ON}
 
 requires
@@ -33,10 +34,10 @@ requires
   fmx;
 
 contains
-  cefreg in 'cefreg.pas',
-  ceffmx in '..\src\ceffmx.pas',
-  cefgui in '..\src\cefgui.pas',
-  ceflib in '..\src\ceflib.pas',
-  cefvcl in '..\src\cefvcl.pas';
+  cefvcl in '..\..\src\cefvcl.pas',
+  ceflib in '..\..\src\ceflib.pas',
+  cefgui in '..\..\src\cefgui.pas',
+  ceffmx in '..\..\src\ceffmx.pas',
+  cefreg in '..\cefreg.pas';
 
 end.
