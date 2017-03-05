@@ -26,8 +26,10 @@ object MainForm: TMainForm
     Cursor = crVSplit
     Align = alBottom
     Visible = False
+    ExplicitTop = 25
+    ExplicitWidth = 408
   end
-  object Chromium: TChromium
+  object crm: TChromium
     Left = 0
     Top = 25
     Width = 864
@@ -35,17 +37,19 @@ object MainForm: TMainForm
     Align = alClient
     DefaultUrl = 'http://www.google.com'
     TabOrder = 0
-    OnProcessMessageReceived = ChromiumProcessMessageReceived
-    OnLoadStart = ChromiumLoadStart
-    OnLoadEnd = ChromiumLoadEnd
-    OnBeforeContextMenu = ChromiumBeforeContextMenu
-    OnContextMenuCommand = ChromiumContextMenuCommand
-    OnAddressChange = ChromiumAddressChange
-    OnTitleChange = ChromiumTitleChange
-    OnStatusMessage = ChromiumStatusMessage
-    OnBeforeDownload = ChromiumBeforeDownload
-    OnDownloadUpdated = ChromiumDownloadUpdated
-    OnBeforeResourceLoad = ChromiumBeforeResourceLoad
+    OnProcessMessageReceived = crmProcessMessageReceived
+    OnLoadStart = crmLoadStart
+    OnLoadEnd = crmLoadEnd
+    OnBeforeContextMenu = crmBeforeContextMenu
+    OnContextMenuCommand = crmContextMenuCommand
+    OnAddressChange = crmAddressChange
+    OnTitleChange = crmTitleChange
+    OnStatusMessage = crmStatusMessage
+    OnBeforeDownload = crmBeforeDownload
+    OnDownloadUpdated = crmDownloadUpdated
+    OnBeforePopup = crmBeforePopup
+    OnBeforeResourceLoad = crmBeforeResourceLoad
+    OnCertificateError = crmCertificateError
   end
   object DevTools: TChromiumDevTools
     Left = 0
@@ -63,7 +67,7 @@ object MainForm: TMainForm
     Panels = <>
     SimplePanel = True
   end
-  object PanelBar: TPanel
+  object Panel1: TPanel
     Left = 0
     Top = 0
     Width = 864
@@ -73,43 +77,43 @@ object MainForm: TMainForm
     DesignSize = (
       864
       25)
-    object ButtonBack: TSpeedButton
+    object SpeedButton1: TSpeedButton
       Left = 0
       Top = 0
       Width = 23
       Height = 22
-      Action = ActionPrev
+      Action = actPrev
     end
-    object ButtonForward: TSpeedButton
+    object SpeedButton2: TSpeedButton
       Left = 24
       Top = 0
       Width = 23
       Height = 22
-      Action = ActionNext
+      Action = actNext
     end
-    object ButtonHome: TSpeedButton
+    object SpeedButton3: TSpeedButton
       Left = 48
       Top = 0
       Width = 23
       Height = 22
-      Action = ActionHome
+      Action = actHome
     end
-    object ButtonReload: TSpeedButton
+    object SpeedButton4: TSpeedButton
       Left = 72
       Top = 0
       Width = 23
       Height = 22
-      Action = ActionReload
+      Action = actReload
     end
-    object ButtonGoto: TSpeedButton
+    object SpeedButton5: TSpeedButton
       Left = 841
       Top = 0
       Width = 23
       Height = 22
-      Action = ActionGoTo
+      Action = actGoTo
       Anchors = [akTop, akRight]
     end
-    object EditAddress: TEdit
+    object edAddress: TEdit
       Left = 95
       Top = 0
       Width = 744
@@ -117,141 +121,141 @@ object MainForm: TMainForm
       Anchors = [akLeft, akTop, akRight]
       TabOrder = 0
       Text = 'http://www.google.com'
-      OnKeyPress = EditAddressKeyPress
+      OnKeyPress = edAddressKeyPress
     end
   end
   object ActionList: TActionList
     Left = 624
     Top = 112
-    object ActionPrev: TAction
+    object actPrev: TAction
       Caption = '<-'
       Enabled = False
-      OnExecute = ActionPrevExecute
-      OnUpdate = ActionPrevUpdate
+      OnExecute = actPrevExecute
+      OnUpdate = actPrevUpdate
     end
-    object ActionNext: TAction
+    object actNext: TAction
       Caption = '->'
       Enabled = False
-      OnExecute = ActionNextExecute
-      OnUpdate = ActionNextUpdate
+      OnExecute = actNextExecute
+      OnUpdate = actNextUpdate
     end
-    object ActionHome: TAction
+    object actHome: TAction
       Caption = 'H'
-      OnExecute = ActionHomeExecute
-      OnUpdate = ActionHomeUpdate
+      OnExecute = actHomeExecute
+      OnUpdate = actHomeUpdate
     end
-    object ActionReload: TAction
+    object actReload: TAction
       Caption = 'R'
-      OnExecute = ActionReloadExecute
-      OnUpdate = ActionReloadUpdate
+      OnExecute = actReloadExecute
+      OnUpdate = actReloadUpdate
     end
-    object ActionGoTo: TAction
+    object actGoTo: TAction
       Caption = '>'
-      OnExecute = ActionGoToExecute
+      OnExecute = actGoToExecute
     end
-    object ActionGetSource: TAction
+    object actGetSource: TAction
       Caption = 'Get source'
-      OnExecute = ActionGetSourceExecute
+      OnExecute = actGetSourceExecute
     end
-    object ActionGetText: TAction
+    object actGetText: TAction
       Caption = 'Get text'
-      OnExecute = ActionGetTextExecute
+      OnExecute = actGetTextExecute
     end
-    object ActionZoomIn: TAction
+    object actZoomIn: TAction
       Caption = 'Zoom in'
-      OnExecute = ActionZoomInExecute
+      OnExecute = actZoomInExecute
     end
-    object ActionZoomOut: TAction
+    object actZoomOut: TAction
       Caption = 'Zoom out'
-      OnExecute = ActionZoomOutExecute
+      OnExecute = actZoomOutExecute
     end
-    object ActionZoomReset: TAction
+    object actZoomReset: TAction
       Caption = 'Zoom reset'
-      OnExecute = ActionZoomResetExecute
+      OnExecute = actZoomResetExecute
     end
-    object ActionExecuteJS: TAction
+    object actExecuteJS: TAction
       Caption = 'Execute JavaScript'
-      OnExecute = ActionExecuteJSExecute
+      OnExecute = actExecuteJSExecute
     end
-    object ActionDom: TAction
+    object actDom: TAction
       Caption = 'Hook DOM'
-      OnExecute = ActionDomExecute
+      OnExecute = actDomExecute
     end
-    object ActionDevTool: TAction
+    object actDevTool: TAction
       AutoCheck = True
       Caption = 'Show DevTools'
-      OnExecute = ActionDevToolExecute
+      OnExecute = actDevToolExecute
     end
-    object ActionDoc: TAction
+    object actDoc: TAction
       Caption = 'Documentation'
-      OnExecute = ActionDocExecute
+      OnExecute = actDocExecute
     end
-    object ActionGroup: TAction
+    object actGroup: TAction
       Caption = 'Google group'
-      OnExecute = ActionGroupExecute
+      OnExecute = actGroupExecute
     end
-    object ActionFileScheme: TAction
+    object actFileScheme: TAction
       Caption = 'File Scheme'
-      OnExecute = ActionFileSchemeExecute
+      OnExecute = actFileSchemeExecute
     end
-    object ActionPrint: TAction
+    object actPrint: TAction
       Caption = 'Print'
-      OnExecute = ActionPrintExecute
+      OnExecute = actPrintExecute
     end
   end
   object MainMenu: TMainMenu
     Left = 624
     Top = 56
-    object MenuItemFile: TMenuItem
+    object File1: TMenuItem
       Caption = '&File'
-      object MenuItemPrint: TMenuItem
-        Action = ActionPrint
+      object Print1: TMenuItem
+        Action = actPrint
       end
-      object MenuItemExit: TMenuItem
-        Caption = 'E&xit'
+      object Exit1: TMenuItem
+        Caption = 'Exit'
         ShortCut = 16465
-        OnClick = MenuItemExitClick
+        OnClick = Exit1Click
       end
     end
-    object MenuItemTest: TMenuItem
+    object est1: TMenuItem
       Caption = '&Test'
-      object MenuItemGetSource: TMenuItem
-        Action = ActionGetSource
+      object mGetsource: TMenuItem
+        Action = actGetSource
       end
-      object MenuItemGetText: TMenuItem
-        Action = ActionGetText
+      object mGetText: TMenuItem
+        Action = actGetText
       end
-      object MenuItemExecuteJavaScript: TMenuItem
-        Action = ActionExecuteJS
+      object ExecuteJavaScript1: TMenuItem
+        Action = actExecuteJS
       end
-      object MenuItemZoomIn: TMenuItem
-        Action = ActionZoomIn
+      object Zoomin1: TMenuItem
+        Action = actZoomIn
       end
-      object MenuItemZoomOut: TMenuItem
-        Action = ActionZoomOut
+      object Zoomout1: TMenuItem
+        Action = actZoomOut
       end
-      object MenuItemZoomReset: TMenuItem
-        Action = ActionZoomReset
+      object Zoomreset1: TMenuItem
+        Action = actZoomReset
       end
-      object MenuItemFileScheme: TMenuItem
-        Action = ActionFileScheme
+      object actFileScheme1: TMenuItem
+        Action = actFileScheme
       end
-      object MenuItemVisitDOM: TMenuItem
-        Action = ActionDom
+      object VisitDOM1: TMenuItem
+        Action = actDom
       end
-      object MenuItemShowDevTools: TMenuItem
-        Action = ActionDevTool
+      object DevelopperTools1: TMenuItem
+        Action = actDevTool
         AutoCheck = True
         ShortCut = 123
       end
     end
-    object MenuItemHelp: TMenuItem
+    object Help1: TMenuItem
       Caption = 'Help'
-      object MenuItemDocumentation: TMenuItem
-        Action = ActionDoc
+      object Documentation1: TMenuItem
+        Action = actDoc
       end
-      object MenuItemGoogleGroup: TMenuItem
-        Action = ActionGroup
+      object Googlegroup1: TMenuItem
+        Action = actGroup
       end
     end
   end

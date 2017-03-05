@@ -1,116 +1,124 @@
-unit Main;
+unit main;
 
 interface
-
 {$I cef.inc}
 
 uses
-  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, ceflib, cefvcl, Buttons, ActnList, Menus, ComCtrls,
-  ExtCtrls, XPMan, Registry, ShellApi, SyncObjs, System.Actions;
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, ceflib, cefvcl, cefgui, Buttons, ActnList, Menus, ComCtrls,
+  ExtCtrls, XPMan, Registry, ShellApi, SyncObjs;
 
 type
   TMainForm = class(TForm)
-    ActionDevTool: TAction;
-    ActionDoc: TAction;
-    ActionDom: TAction;
-    ActionExecuteJS: TAction;
-    ActionFileScheme: TAction;
-    ActionGetSource: TAction;
-    ActionGetText: TAction;
-    ActionGoTo: TAction;
-    ActionGroup: TAction;
-    ActionHome: TAction;
-    ActionList: TActionList;
-    ActionNext: TAction;
-    ActionPrev: TAction;
-    ActionPrint: TAction;
-    ActionReload: TAction;
-    ActionZoomIn: TAction;
-    ActionZoomOut: TAction;
-    ActionZoomReset: TAction;
-    ButtonBack: TSpeedButton;
-    ButtonForward: TSpeedButton;
-    ButtonGoto: TSpeedButton;
-    ButtonHome: TSpeedButton;
-    ButtonReload: TSpeedButton;
-    Chromium: TChromium;
+    crm: TChromium;
     DevTools: TChromiumDevTools;
-    EditAddress: TEdit;
-    MainMenu: TMainMenu;
-    MenuItemDocumentation: TMenuItem;
-    MenuItemExecuteJavaScript: TMenuItem;
-    MenuItemExit: TMenuItem;
-    MenuItemFile: TMenuItem;
-    MenuItemFileScheme: TMenuItem;
-    MenuItemGetSource: TMenuItem;
-    MenuItemGetText: TMenuItem;
-    MenuItemGoogleGroup: TMenuItem;
-    MenuItemHelp: TMenuItem;
-    MenuItemPrint: TMenuItem;
-    MenuItemShowDevTools: TMenuItem;
-    MenuItemTest: TMenuItem;
-    MenuItemVisitDOM: TMenuItem;
-    MenuItemZoomIn: TMenuItem;
-    MenuItemZoomOut: TMenuItem;
-    MenuItemZoomReset: TMenuItem;
-    PanelBar: TPanel;
-    SaveDialog: TSaveDialog;
-    Splitter: TSplitter;
     StatusBar: TStatusBar;
-    procedure EditAddressKeyPress(Sender: TObject; var Key: Char);
-    procedure ActionPrevExecute(Sender: TObject);
-    procedure ActionNextExecute(Sender: TObject);
-    procedure ActionHomeExecute(Sender: TObject);
-    procedure ActionReloadExecute(Sender: TObject);
-    procedure ActionReloadUpdate(Sender: TObject);
-    procedure ActionGoToExecute(Sender: TObject);
+    ActionList: TActionList;
+    actPrev: TAction;
+    actNext: TAction;
+    actHome: TAction;
+    actReload: TAction;
+    actGoTo: TAction;
+    MainMenu: TMainMenu;
+    File1: TMenuItem;
+    est1: TMenuItem;
+    mGetsource: TMenuItem;
+    mGetText: TMenuItem;
+    actGetSource: TAction;
+    actGetText: TAction;
+    actZoomIn: TAction;
+    actZoomOut: TAction;
+    actZoomReset: TAction;
+    Zoomin1: TMenuItem;
+    Zoomout1: TMenuItem;
+    Zoomreset1: TMenuItem;
+    actExecuteJS: TAction;
+    ExecuteJavaScript1: TMenuItem;
+    Exit1: TMenuItem;
+    Print1: TMenuItem;
+    actFileScheme1: TMenuItem;
+    actDom: TAction;
+    VisitDOM1: TMenuItem;
+    SaveDialog: TSaveDialog;
+    actDevTool: TAction;
+    DevelopperTools1: TMenuItem;
+    Panel1: TPanel;
+    SpeedButton1: TSpeedButton;
+    SpeedButton2: TSpeedButton;
+    SpeedButton3: TSpeedButton;
+    SpeedButton4: TSpeedButton;
+    edAddress: TEdit;
+    SpeedButton5: TSpeedButton;
+    actDoc: TAction;
+    Help1: TMenuItem;
+    Documentation1: TMenuItem;
+    actGroup: TAction;
+    Googlegroup1: TMenuItem;
+    actFileScheme: TAction;
+    actPrint: TAction;
+    Splitter: TSplitter;
+    procedure edAddressKeyPress(Sender: TObject; var Key: Char);
+    procedure actPrevExecute(Sender: TObject);
+    procedure actNextExecute(Sender: TObject);
+    procedure actHomeExecute(Sender: TObject);
+    procedure actReloadExecute(Sender: TObject);
+    procedure actReloadUpdate(Sender: TObject);
+    procedure actGoToExecute(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-    procedure ActionHomeUpdate(Sender: TObject);
-    procedure ActionGetSourceExecute(Sender: TObject);
-    procedure ActionGetTextExecute(Sender: TObject);
-    procedure ActionZoomInExecute(Sender: TObject);
-    procedure ActionZoomOutExecute(Sender: TObject);
-    procedure ActionZoomResetExecute(Sender: TObject);
-    procedure ActionExecuteJSExecute(Sender: TObject);
-    procedure MenuItemExitClick(Sender: TObject);
-    procedure ActionFileSchemeExecute(Sender: TObject);
-    procedure ActionDomExecute(Sender: TObject);
-    procedure ActionNextUpdate(Sender: TObject);
-    procedure ActionPrevUpdate(Sender: TObject);
-    procedure ChromiumAddressChange(Sender: TObject; const browser: ICefBrowser;
+    procedure actHomeUpdate(Sender: TObject);
+    procedure actGetSourceExecute(Sender: TObject);
+    procedure actGetTextExecute(Sender: TObject);
+    procedure actZoomInExecute(Sender: TObject);
+    procedure actZoomOutExecute(Sender: TObject);
+    procedure actZoomResetExecute(Sender: TObject);
+    procedure actExecuteJSExecute(Sender: TObject);
+    procedure Exit1Click(Sender: TObject);
+    procedure actFileSchemeExecute(Sender: TObject);
+    procedure actDomExecute(Sender: TObject);
+    procedure actNextUpdate(Sender: TObject);
+    procedure actPrevUpdate(Sender: TObject);
+    procedure crmAddressChange(Sender: TObject; const browser: ICefBrowser;
       const frame: ICefFrame; const url: ustring);
-    procedure ChromiumLoadEnd(Sender: TObject; const browser: ICefBrowser;
+    procedure crmLoadEnd(Sender: TObject; const browser: ICefBrowser;
       const frame: ICefFrame; httpStatusCode: Integer);
-    procedure ChromiumLoadStart(Sender: TObject; const browser: ICefBrowser;
-      const frame: ICefFrame);
-    procedure ChromiumStatusMessage(Sender: TObject; const browser: ICefBrowser;
+    procedure crmStatusMessage(Sender: TObject; const browser: ICefBrowser;
       const value: ustring);
-    procedure ChromiumTitleChange(Sender: TObject; const browser: ICefBrowser;
+    procedure crmTitleChange(Sender: TObject; const browser: ICefBrowser;
       const title: ustring);
-    procedure ActionDevToolExecute(Sender: TObject);
-    procedure ActionDocExecute(Sender: TObject);
-    procedure ActionGroupExecute(Sender: TObject);
+    procedure actDevToolExecute(Sender: TObject);
+    procedure actDocExecute(Sender: TObject);
+    procedure actGroupExecute(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
-    procedure ChromiumBeforeDownload(Sender: TObject; const browser: ICefBrowser;
+    procedure crmBeforeDownload(Sender: TObject; const browser: ICefBrowser;
       const downloadItem: ICefDownloadItem; const suggestedName: ustring;
       const callback: ICefBeforeDownloadCallback);
-    procedure ChromiumDownloadUpdated(Sender: TObject; const browser: ICefBrowser;
+    procedure crmDownloadUpdated(Sender: TObject; const browser: ICefBrowser;
       const downloadItem: ICefDownloadItem;
       const callback: ICefDownloadItemCallback);
-    procedure ChromiumProcessMessageReceived(Sender: TObject;
+    procedure crmProcessMessageReceived(Sender: TObject;
       const browser: ICefBrowser; sourceProcess: TCefProcessId;
       const message: ICefProcessMessage; out Result: Boolean);
-    procedure ActionPrintExecute(Sender: TObject);
-    procedure ChromiumBeforeContextMenu(Sender: TObject; const browser: ICefBrowser;
+    procedure actPrintExecute(Sender: TObject);
+    procedure crmBeforeContextMenu(Sender: TObject; const browser: ICefBrowser;
       const frame: ICefFrame; const params: ICefContextMenuParams;
       const model: ICefMenuModel);
-    procedure ChromiumContextMenuCommand(Sender: TObject; const browser: ICefBrowser;
+    procedure crmContextMenuCommand(Sender: TObject; const browser: ICefBrowser;
       const frame: ICefFrame; const params: ICefContextMenuParams;
       commandId: Integer; eventFlags: TCefEventFlags; out Result: Boolean);
-    procedure ChromiumBeforeResourceLoad(Sender: TObject; const browser: ICefBrowser;
+    procedure crmCertificateError(Sender: TObject; const browser: ICefBrowser;
+      certError: Integer; const requestUrl: ustring; const sslInfo: ICefSslInfo;
+      const callback: ICefRequestCallback; out Result: Boolean);
+    procedure crmBeforePopup(Sender: TObject; const browser: ICefBrowser;
+      const frame: ICefFrame; const targetUrl, targetFrameName: ustring;
+      targetDisposition: TCefWindowOpenDisposition; userGesture: Boolean;
+      var popupFeatures: TCefPopupFeatures; var windowInfo: TCefWindowInfo;
+      var client: ICefClient; var settings: TCefBrowserSettings;
+      var noJavascriptAccess: Boolean; out Result: Boolean);
+    procedure crmBeforeResourceLoad(Sender: TObject; const browser: ICefBrowser;
       const frame: ICefFrame; const request: ICefRequest;
       const callback: ICefRequestCallback; out Result: TCefReturnValue);
+    procedure crmLoadStart(Sender: TObject; const browser: ICefBrowser;
+      const frame: ICefFrame; transitionType: TCefTransitionType);
   private
     { Déclarations privées }
     FLoading: Boolean;
@@ -120,6 +128,11 @@ type
   TCustomRenderProcessHandler = class(TCefRenderProcessHandlerOwn)
   protected
     procedure OnWebKitInitialized; override;
+  end;
+
+  TCustomBrowserProcessHandler = class(TCefBrowserProcessHandlerOwn)
+  protected
+    procedure OnScheduleMessagePumpWork(delayMs: Int64); override;
   end;
 
   TTestExtension = class
@@ -132,35 +145,38 @@ var
 
 implementation
 
+var
+  pumpMessages: Integer = 0;
+
 const
   CUSTOMMENUCOMMAND_INSPECTELEMENT = 7241221;
 
 {$R *.dfm}
 
-procedure TMainForm.ActionDevToolExecute(Sender: TObject);
+procedure TMainForm.actDevToolExecute(Sender: TObject);
 begin
-  if ActionDevTool.Checked then
+  if actDevTool.Checked then
   begin
     DevTools.Visible := True;
     Splitter.Visible := True;
-    DevTools.ShowDevTools(Chromium.Browser);
+    DevTools.ShowDevTools(crm.Browser);
   end else
   begin
-    DevTools.CloseDevTools(Chromium.Browser);
+    DevTools.CloseDevTools(crm.Browser);
     Splitter.Visible := False;
     DevTools.Visible := False;
   end;
 end;
 
-procedure TMainForm.ActionDocExecute(Sender: TObject);
+procedure TMainForm.actDocExecute(Sender: TObject);
 begin
-  Chromium.Load('http://magpcss.org/ceforum/apidocs3');
+  crm.Load('http://magpcss.org/ceforum/apidocs3');
 end;
 
-procedure TMainForm.ActionDomExecute(Sender: TObject);
+procedure TMainForm.actDomExecute(Sender: TObject);
 begin
-  if Chromium.Browser <> nil then
-    Chromium.Browser.MainFrame.ExecuteJavaScript(
+  if crm.Browser <> nil then
+    crm.Browser.MainFrame.ExecuteJavaScript(
       'document.body.addEventListener("mouseover", function(evt){'+
         'function getpath(n){'+
           'var ret = "<" + n.nodeName + ">";'+
@@ -171,17 +187,17 @@ begin
       ')', 'about:blank', 0);
 end;
 
-procedure TMainForm.ActionExecuteJSExecute(Sender: TObject);
+procedure TMainForm.actExecuteJSExecute(Sender: TObject);
 begin
-  if Chromium.Browser <> nil then
-    Chromium.Browser.MainFrame.ExecuteJavaScript(
+  if crm.Browser <> nil then
+    crm.Browser.MainFrame.ExecuteJavaScript(
       'alert(''JavaScript execute works!'');', 'about:blank', 0);
 end;
 
-procedure TMainForm.ActionFileSchemeExecute(Sender: TObject);
+procedure TMainForm.actFileSchemeExecute(Sender: TObject);
 begin
-  if Chromium.Browser <> nil then
-    Chromium.Browser.MainFrame.LoadUrl('local://c/');
+  if crm.Browser <> nil then
+    crm.Browser.MainFrame.LoadUrl('local://c/');
 end;
 
 procedure CallbackGetSource(const src: ustring);
@@ -192,12 +208,12 @@ begin
   source := StringReplace(source, '<', '&lt;', [rfReplaceAll]);
   source := StringReplace(source, '>', '&gt;', [rfReplaceAll]);
   source := '<html><body>Source:<pre>' + source + '</pre></body></html>';
-  MainForm.Chromium.Browser.MainFrame.LoadString(source, 'source://html');
+  MainForm.crm.Browser.MainFrame.LoadString(source, 'source://html');
 end;
 
-procedure TMainForm.ActionGetSourceExecute(Sender: TObject);
+procedure TMainForm.actGetSourceExecute(Sender: TObject);
 begin
-  Chromium.Browser.MainFrame.GetSourceProc(CallbackGetSource);
+  crm.Browser.MainFrame.GetSourceProc(CallbackGetSource);
 end;
 
 procedure CallbackGetText(const txt: ustring);
@@ -208,140 +224,166 @@ begin
   source := StringReplace(source, '<', '&lt;', [rfReplaceAll]);
   source := StringReplace(source, '>', '&gt;', [rfReplaceAll]);
   source := '<html><body>Text:<pre>' + source + '</pre></body></html>';
-  MainForm.Chromium.Browser.MainFrame.LoadString(source, 'source://text');
+  MainForm.crm.Browser.MainFrame.LoadString(source, 'source://text');
 end;
 
-procedure TMainForm.ActionGetTextExecute(Sender: TObject);
+procedure TMainForm.actGetTextExecute(Sender: TObject);
 begin
-  Chromium.Browser.MainFrame.GetTextProc(CallbackGetText);
+  crm.Browser.MainFrame.GetTextProc(CallbackGetText);
 end;
 
-procedure TMainForm.ActionGoToExecute(Sender: TObject);
+procedure TMainForm.actGoToExecute(Sender: TObject);
 begin
-  if Chromium.Browser <> nil then
-    Chromium.Browser.MainFrame.LoadUrl(EditAddress.Text);
+  if crm.Browser <> nil then
+    crm.Browser.MainFrame.LoadUrl(edAddress.Text);
 end;
 
-procedure TMainForm.ActionGroupExecute(Sender: TObject);
+procedure TMainForm.actGroupExecute(Sender: TObject);
 begin
-  Chromium.Load('https://groups.google.com/forum/?fromgroups#!forum/delphichromiumembedded');
+  crm.Load('https://groups.google.com/forum/?fromgroups#!forum/delphichromiumembedded');
 end;
 
-procedure TMainForm.ActionHomeExecute(Sender: TObject);
+procedure TMainForm.actHomeExecute(Sender: TObject);
 begin
-  if Chromium.Browser <> nil then
-    Chromium.Browser.MainFrame.LoadUrl(Chromium.DefaultUrl);
+  if crm.Browser <> nil then
+    crm.Browser.MainFrame.LoadUrl(crm.DefaultUrl);
 end;
 
-procedure TMainForm.ActionHomeUpdate(Sender: TObject);
+procedure TMainForm.actHomeUpdate(Sender: TObject);
 begin
-  TAction(Sender).Enabled := Chromium.Browser <> nil;
+  TAction(Sender).Enabled := crm.Browser <> nil;
 end;
 
-procedure TMainForm.ActionNextExecute(Sender: TObject);
+procedure TMainForm.actNextExecute(Sender: TObject);
 begin
-  if Chromium.Browser <> nil then
-    Chromium.Browser.GoForward;
+  if crm.Browser <> nil then
+    crm.Browser.GoForward;
 end;
 
-procedure TMainForm.ActionNextUpdate(Sender: TObject);
+procedure TMainForm.actNextUpdate(Sender: TObject);
 begin
-  if Chromium.Browser <> nil then
-    ActionNext.Enabled := Chromium.Browser.CanGoForward
-  else
-    ActionNext.Enabled := False;
+  if crm.Browser <> nil then
+    actNext.Enabled := crm.Browser.CanGoForward else
+    actNext.Enabled := False;
 end;
 
-procedure TMainForm.ActionPrevExecute(Sender: TObject);
+procedure TMainForm.actPrevExecute(Sender: TObject);
 begin
-  if Chromium.Browser <> nil then
-    Chromium.Browser.GoBack;
+  if crm.Browser <> nil then
+    crm.Browser.GoBack;
 end;
 
-procedure TMainForm.ActionPrevUpdate(Sender: TObject);
+procedure TMainForm.actPrevUpdate(Sender: TObject);
 begin
-  if Chromium.Browser <> nil then
-    ActionPrev.Enabled := Chromium.Browser.CanGoBack
-  else
-    ActionPrev.Enabled := False;
+  if crm.Browser <> nil then
+    actPrev.Enabled := crm.Browser.CanGoBack else
+    actPrev.Enabled := False;
 end;
 
-procedure TMainForm.ActionPrintExecute(Sender: TObject);
+procedure TMainForm.actPrintExecute(Sender: TObject);
 begin
-  Chromium.Browser.Host.Print;
+  crm.Browser.Host.Print;
 end;
 
-procedure TMainForm.ActionReloadExecute(Sender: TObject);
+procedure TMainForm.actReloadExecute(Sender: TObject);
 begin
-  if Chromium.Browser <> nil then
+  if crm.Browser <> nil then
     if FLoading then
-      Chromium.Browser.StopLoad
-    else
-      Chromium.Browser.Reload;
+      crm.Browser.StopLoad else
+      crm.Browser.Reload;
 end;
 
-procedure TMainForm.ActionReloadUpdate(Sender: TObject);
+procedure TMainForm.actReloadUpdate(Sender: TObject);
 begin
   if FLoading then
     TAction(sender).Caption := 'X' else
     TAction(sender).Caption := 'R';
-  TAction(Sender).Enabled := Chromium.Browser <> nil;
+  TAction(Sender).Enabled := crm.Browser <> nil;
 end;
 
 function TMainForm.IsMain(const b: ICefBrowser; const f: ICefFrame): Boolean;
 begin
-  Result := (b <> nil) and (b.Identifier = Chromium.BrowserId) and ((f = nil) or (f.IsMain));
+  Result := (b <> nil) and (b.Identifier = crm.BrowserId) and ((f = nil) or (f.IsMain));
 end;
 
-procedure TMainForm.ActionZoomInExecute(Sender: TObject);
+procedure TMainForm.actZoomInExecute(Sender: TObject);
 begin
-  if Chromium.Browser <> nil then
-    Chromium.Browser.Host.ZoomLevel := Chromium.Browser.Host.ZoomLevel + 0.5;
+  if crm.Browser <> nil then
+    crm.Browser.Host.ZoomLevel := crm.Browser.Host.ZoomLevel + 0.5;
 end;
 
-procedure TMainForm.ActionZoomOutExecute(Sender: TObject);
+procedure TMainForm.actZoomOutExecute(Sender: TObject);
 begin
-  if Chromium.Browser <> nil then
-    Chromium.Browser.Host.ZoomLevel := Chromium.Browser.Host.ZoomLevel - 0.5;
+  if crm.Browser <> nil then
+    crm.Browser.Host.ZoomLevel := crm.Browser.Host.ZoomLevel - 0.5;
 end;
 
-procedure TMainForm.ActionZoomResetExecute(Sender: TObject);
+procedure TMainForm.actZoomResetExecute(Sender: TObject);
 begin
-  if Chromium.Browser <> nil then
-    Chromium.Browser.Host.ZoomLevel := 0;
+  if crm.Browser <> nil then
+    crm.Browser.Host.ZoomLevel := 0;
 end;
 
-procedure TMainForm.ChromiumAddressChange(Sender: TObject;
+procedure TMainForm.crmAddressChange(Sender: TObject;
   const browser: ICefBrowser; const frame: ICefFrame; const url: ustring);
 begin
   if IsMain(browser, frame) then
-    EditAddress.Text := url;
+    edAddress.Text := url;
 end;
 
-procedure TMainForm.ChromiumBeforeContextMenu(Sender: TObject;
+procedure TMainForm.crmBeforeContextMenu(Sender: TObject;
   const browser: ICefBrowser; const frame: ICefFrame;
   const params: ICefContextMenuParams; const model: ICefMenuModel);
 begin
   model.AddItem(CUSTOMMENUCOMMAND_INSPECTELEMENT, 'Inspect Element');
 end;
 
-procedure TMainForm.ChromiumBeforeDownload(Sender: TObject;
+procedure TMainForm.crmBeforeDownload(Sender: TObject;
   const browser: ICefBrowser; const downloadItem: ICefDownloadItem;
   const suggestedName: ustring; const callback: ICefBeforeDownloadCallback);
 begin
   callback.Cont(ExtractFilePath(ParamStr(0)) + suggestedName, True);
 end;
 
-procedure TMainForm.ChromiumBeforeResourceLoad(Sender: TObject;
+procedure TMainForm.crmBeforePopup(Sender: TObject; const browser: ICefBrowser;
+  const frame: ICefFrame; const targetUrl, targetFrameName: ustring;
+  targetDisposition: TCefWindowOpenDisposition; userGesture: Boolean;
+  var popupFeatures: TCefPopupFeatures; var windowInfo: TCefWindowInfo;
+  var client: ICefClient; var settings: TCefBrowserSettings;
+  var noJavascriptAccess: Boolean; out Result: Boolean);
+begin
+  // prevent popup
+  crm.Load(targetUrl);
+  Result := True;
+end;
+
+procedure TMainForm.crmBeforeResourceLoad(Sender: TObject;
   const browser: ICefBrowser; const frame: ICefFrame;
   const request: ICefRequest; const callback: ICefRequestCallback;
   out Result: TCefReturnValue);
 var
   u: TUrlParts;
 begin
+  // redirect home to google
+  if CefParseUrl(request.Url, u) then
+    if (u.host = 'home') then
+    begin
+      u.host := 'www.google.com';
+      request.Url := CefCreateUrl(u);
+    end;
 end;
 
-procedure TMainForm.ChromiumContextMenuCommand(Sender: TObject;
+procedure TMainForm.crmCertificateError(Sender: TObject;
+  const browser: ICefBrowser; certError: Integer; const requestUrl: ustring;
+  const sslInfo: ICefSslInfo; const callback: ICefRequestCallback;
+  out Result: Boolean);
+begin
+  // let use untrusted certificates (ex: cacert.org)
+  callback.Cont(True);
+  Result := True;
+end;
+
+procedure TMainForm.crmContextMenuCommand(Sender: TObject;
   const browser: ICefBrowser; const frame: ICefFrame;
   const params: ICefContextMenuParams; commandId: Integer;
   eventFlags: TCefEventFlags; out Result: Boolean);
@@ -355,39 +397,38 @@ begin
     mousePoint.y := params.YCoord;
     Splitter.Visible := True;
     DevTools.Visible := True;
-    ActionDevTool.Checked := True;
-    DevTools.CloseDevTools(Chromium.Browser);
-    Application.ProcessMessages;
-    DevTools.ShowDevTools(Chromium.Browser,@mousePoint);
+    actDevTool.Checked := True;
+    DevTools.CloseDevTools(crm.Browser);
+    application.ProcessMessages;
+    DevTools.ShowDevTools(crm.Browser,@mousePoint);
     Result := True;
   end;
 end;
 
-procedure TMainForm.ChromiumDownloadUpdated(Sender: TObject;
+procedure TMainForm.crmDownloadUpdated(Sender: TObject;
   const browser: ICefBrowser; const downloadItem: ICefDownloadItem;
   const callback: ICefDownloadItemCallback);
 begin
   if downloadItem.IsInProgress then
-    StatusBar.SimpleText := IntToStr(downloadItem.PercentComplete) + '%'
-  else
+    StatusBar.SimpleText := IntToStr(downloadItem.PercentComplete) + '%' else
     StatusBar.SimpleText := '';
 end;
 
-procedure TMainForm.ChromiumLoadEnd(Sender: TObject; const browser: ICefBrowser;
+procedure TMainForm.crmLoadEnd(Sender: TObject; const browser: ICefBrowser;
   const frame: ICefFrame; httpStatusCode: Integer);
 begin
   if IsMain(browser, frame) then
     FLoading := False;
 end;
 
-procedure TMainForm.ChromiumLoadStart(Sender: TObject; const browser: ICefBrowser;
-  const frame: ICefFrame);
+procedure TMainForm.crmLoadStart(Sender: TObject; const browser: ICefBrowser;
+  const frame: ICefFrame; transitionType: TCefTransitionType);
 begin
   if IsMain(browser, frame) then
     FLoading := True;
 end;
 
-procedure TMainForm.ChromiumProcessMessageReceived(Sender: TObject;
+procedure TMainForm.crmProcessMessageReceived(Sender: TObject;
   const browser: ICefBrowser; sourceProcess: TCefProcessId;
   const message: ICefProcessMessage; out Result: Boolean);
 begin
@@ -399,32 +440,32 @@ begin
     Result := False;
 end;
 
-procedure TMainForm.ChromiumStatusMessage(Sender: TObject;
+procedure TMainForm.crmStatusMessage(Sender: TObject;
   const browser: ICefBrowser; const value: ustring);
 begin
   StatusBar.SimpleText := value
 end;
 
-procedure TMainForm.ChromiumTitleChange(Sender: TObject; const browser: ICefBrowser;
+procedure TMainForm.crmTitleChange(Sender: TObject; const browser: ICefBrowser;
   const title: ustring);
 begin
   if IsMain(browser) then
     Caption := title;
 end;
 
-procedure TMainForm.EditAddressKeyPress(Sender: TObject; var Key: Char);
+procedure TMainForm.edAddressKeyPress(Sender: TObject; var Key: Char);
 begin
   if Key = #13 then
   begin
-    if Chromium.Browser <> nil then
+    if crm.Browser <> nil then
     begin
-      Chromium.Browser.MainFrame.LoadUrl(EditAddress.Text);
+      crm.Browser.MainFrame.LoadUrl(edAddress.Text);
       Abort;
     end;
   end;
 end;
 
-procedure TMainForm.MenuItemExitClick(Sender: TObject);
+procedure TMainForm.Exit1Click(Sender: TObject);
 begin
   Close;
 end;
@@ -433,7 +474,7 @@ procedure TMainForm.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
 begin
   // avoid AV when closing application
   if CefSingleProcess then
-    Chromium.Load('about:blank');
+    crm.Load('about:blank');
   CanClose := True;
 end;
 
@@ -442,8 +483,8 @@ begin
   FLoading := False;
 end;
 
-
 { TCustomRenderProcessHandler }
+
 
 function getpath(const n: ICefDomNode): string;
 begin
@@ -458,7 +499,6 @@ begin
   TCefRTTIExtension.Register('app', TTestExtension);
 {$ENDIF}
 end;
-
 
 { TTestExtension }
 
@@ -476,9 +516,16 @@ begin
   Result := 'Hello from Delphi';
 end;
 
+{ TCustomBrowserProcessHandler }
+
+procedure TCustomBrowserProcessHandler.OnScheduleMessagePumpWork(
+  delayMs: Int64);
+begin
+  InterlockedExchange(pumpMessages, 1);
+end;
+
 initialization
   CefRemoteDebuggingPort := 9000;
   CefRenderProcessHandler := TCustomRenderProcessHandler.Create;
-  CefBrowserProcessHandler := TCefBrowserProcessHandlerOwn.Create;
 end.
 
