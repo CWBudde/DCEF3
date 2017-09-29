@@ -25,7 +25,7 @@ package DCEF;
 {$DEFINE DEBUG}
 {$ENDIF IMPLICITBUILDING}
 {$DESCRIPTION 'Delphi Chromium Embedded 3 Framework'}
-{$LIBSUFFIX 'DX'}
+{$LIBSUFFIX 'RX'}
 {$IMPLICITBUILD ON}
 
 requires
